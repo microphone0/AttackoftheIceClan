@@ -8,14 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		B5F017C9226DF58100F6EA32 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F017C8226DF58100F6EA32 /* AppDelegate.swift */; };
-		B5F017CB226DF58100F6EA32 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B5F017CA226DF58100F6EA32 /* GameScene.sks */; };
-		B5F017CD226DF58100F6EA32 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = B5F017CC226DF58100F6EA32 /* Actions.sks */; };
 		B5F017CF226DF58100F6EA32 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F017CE226DF58100F6EA32 /* GameScene.swift */; };
 		B5F017D1226DF58100F6EA32 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F017D0226DF58100F6EA32 /* GameViewController.swift */; };
 		B5F017D4226DF58100F6EA32 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F017D2226DF58100F6EA32 /* Main.storyboard */; };
 		B5F017D6226DF58200F6EA32 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5F017D5226DF58200F6EA32 /* Assets.xcassets */; };
 		B5F017D9226DF58200F6EA32 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5F017D7226DF58200F6EA32 /* LaunchScreen.storyboard */; };
 		B5F017E4226DF58200F6EA32 /* AttackoftheIceClanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F017E3226DF58200F6EA32 /* AttackoftheIceClanTests.swift */; };
+		B5F017EF226DF6DE00F6EA32 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F017EE226DF6DE00F6EA32 /* GameOverScene.swift */; };
+		B5F017F3226DF87400F6EA32 /* Explosion+3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B5F017F0226DF87300F6EA32 /* Explosion+3.mp3 */; };
+		B5F017F4226DF87400F6EA32 /* Fireball+2.wav in Resources */ = {isa = PBXBuildFile; fileRef = B5F017F1226DF87300F6EA32 /* Fireball+2.wav */; };
+		B5F017F5226DF87400F6EA32 /* Komiku_Battle_of_Pogs.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B5F017F2226DF87300F6EA32 /* Komiku_Battle_of_Pogs.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,8 +33,6 @@
 /* Begin PBXFileReference section */
 		B5F017C5226DF58100F6EA32 /* AttackoftheIceClan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AttackoftheIceClan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5F017C8226DF58100F6EA32 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B5F017CA226DF58100F6EA32 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		B5F017CC226DF58100F6EA32 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		B5F017CE226DF58100F6EA32 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		B5F017D0226DF58100F6EA32 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		B5F017D3226DF58100F6EA32 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -42,6 +42,10 @@
 		B5F017DF226DF58200F6EA32 /* AttackoftheIceClanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AttackoftheIceClanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5F017E3226DF58200F6EA32 /* AttackoftheIceClanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackoftheIceClanTests.swift; sourceTree = "<group>"; };
 		B5F017E5226DF58200F6EA32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B5F017EE226DF6DE00F6EA32 /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
+		B5F017F0226DF87300F6EA32 /* Explosion+3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Explosion+3.mp3"; sourceTree = "<group>"; };
+		B5F017F1226DF87300F6EA32 /* Fireball+2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Fireball+2.wav"; sourceTree = "<group>"; };
+		B5F017F2226DF87300F6EA32 /* Komiku_Battle_of_Pogs.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Komiku_Battle_of_Pogs.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,15 +87,17 @@
 		B5F017C7226DF58100F6EA32 /* AttackoftheIceClan */ = {
 			isa = PBXGroup;
 			children = (
+				B5F017F0226DF87300F6EA32 /* Explosion+3.mp3 */,
+				B5F017F1226DF87300F6EA32 /* Fireball+2.wav */,
+				B5F017F2226DF87300F6EA32 /* Komiku_Battle_of_Pogs.mp3 */,
 				B5F017C8226DF58100F6EA32 /* AppDelegate.swift */,
-				B5F017CA226DF58100F6EA32 /* GameScene.sks */,
-				B5F017CC226DF58100F6EA32 /* Actions.sks */,
 				B5F017CE226DF58100F6EA32 /* GameScene.swift */,
 				B5F017D0226DF58100F6EA32 /* GameViewController.swift */,
 				B5F017D2226DF58100F6EA32 /* Main.storyboard */,
 				B5F017D5226DF58200F6EA32 /* Assets.xcassets */,
 				B5F017D7226DF58200F6EA32 /* LaunchScreen.storyboard */,
 				B5F017DA226DF58200F6EA32 /* Info.plist */,
+				B5F017EE226DF6DE00F6EA32 /* GameOverScene.swift */,
 			);
 			path = AttackoftheIceClan;
 			sourceTree = "<group>";
@@ -187,10 +193,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5F017D4226DF58100F6EA32 /* Main.storyboard in Resources */,
-				B5F017CB226DF58100F6EA32 /* GameScene.sks in Resources */,
 				B5F017D6226DF58200F6EA32 /* Assets.xcassets in Resources */,
+				B5F017F4226DF87400F6EA32 /* Fireball+2.wav in Resources */,
 				B5F017D9226DF58200F6EA32 /* LaunchScreen.storyboard in Resources */,
-				B5F017CD226DF58100F6EA32 /* Actions.sks in Resources */,
+				B5F017F3226DF87400F6EA32 /* Explosion+3.mp3 in Resources */,
+				B5F017F5226DF87400F6EA32 /* Komiku_Battle_of_Pogs.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,6 +217,7 @@
 			files = (
 				B5F017CF226DF58100F6EA32 /* GameScene.swift in Sources */,
 				B5F017D1226DF58100F6EA32 /* GameViewController.swift in Sources */,
+				B5F017EF226DF6DE00F6EA32 /* GameOverScene.swift in Sources */,
 				B5F017C9226DF58100F6EA32 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
