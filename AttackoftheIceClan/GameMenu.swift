@@ -40,4 +40,19 @@ class GameMenuScene: SKScene {
         shop.position = CGPoint(x: frame.size.width/2, y: frame.size.height/3)
         addChild(shop)
     }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch = touches.first
+        let touchLocation = touch?.location(in: self)
+        
+        if shop.contains(touchLocation!) {
+            print("Go to shop!!")
+        }
+        
+        if play.contains(touchLocation!) {
+            let reveal = SKTransition.flipHorizontal(withDuration: 1.0)
+            let scene = GameScene(size: size)
+            self.view?.presentScene(scene, transition:reveal)
+        }
+    }
 }
