@@ -18,6 +18,7 @@
 		B5F017F3226DF87400F6EA32 /* Explosion+3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B5F017F0226DF87300F6EA32 /* Explosion+3.mp3 */; };
 		B5F017F4226DF87400F6EA32 /* Fireball+2.wav in Resources */ = {isa = PBXBuildFile; fileRef = B5F017F1226DF87300F6EA32 /* Fireball+2.wav */; };
 		B5F017F5226DF87400F6EA32 /* Komiku_Battle_of_Pogs.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B5F017F2226DF87300F6EA32 /* Komiku_Battle_of_Pogs.mp3 */; };
+		B5F018032273B62600F6EA32 /* GameMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F018022273B62600F6EA32 /* GameMenu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		B5F017F0226DF87300F6EA32 /* Explosion+3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Explosion+3.mp3"; sourceTree = "<group>"; };
 		B5F017F1226DF87300F6EA32 /* Fireball+2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Fireball+2.wav"; sourceTree = "<group>"; };
 		B5F017F2226DF87300F6EA32 /* Komiku_Battle_of_Pogs.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Komiku_Battle_of_Pogs.mp3; sourceTree = "<group>"; };
+		B5F018022273B62600F6EA32 /* GameMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				B5F017D7226DF58200F6EA32 /* LaunchScreen.storyboard */,
 				B5F017DA226DF58200F6EA32 /* Info.plist */,
 				B5F017EE226DF6DE00F6EA32 /* GameOverScene.swift */,
+				B5F018022273B62600F6EA32 /* GameMenu.swift */,
 			);
 			path = AttackoftheIceClan;
 			sourceTree = "<group>";
@@ -216,6 +219,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5F017CF226DF58100F6EA32 /* GameScene.swift in Sources */,
+				B5F018032273B62600F6EA32 /* GameMenu.swift in Sources */,
 				B5F017D1226DF58100F6EA32 /* GameViewController.swift in Sources */,
 				B5F017EF226DF6DE00F6EA32 /* GameOverScene.swift in Sources */,
 				B5F017C9226DF58100F6EA32 /* AppDelegate.swift in Sources */,

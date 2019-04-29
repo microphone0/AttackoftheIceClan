@@ -11,8 +11,8 @@ import SpriteKit
 struct PhysicsCategory {
     static let none      : UInt32 = 0
     static let all       : UInt32 = UInt32.max
-    static let monster   : UInt32 = 0b1       // 1
-    static let projectile: UInt32 = 0b10      // 2
+    static let monster   : UInt32 = 0b1
+    static let projectile: UInt32 = 0b10
 }
 
 //Used for mod to spawn more enemies
@@ -20,7 +20,6 @@ var n = 30
 
 extension GameScene: SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
-        // 1
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
         if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
@@ -31,7 +30,6 @@ extension GameScene: SKPhysicsContactDelegate {
             secondBody = contact.bodyA
         }
         
-        // 2
         if ((firstBody.categoryBitMask & PhysicsCategory.monster != 0) &&
             (secondBody.categoryBitMask & PhysicsCategory.projectile != 0)) {
             if let monster = firstBody.node as? SKSpriteNode,
@@ -75,7 +73,7 @@ extension CGPoint {
 }
 
 class GameScene: SKScene {
-    // 1
+    
     let player = SKSpriteNode(imageNamed: "fireMage")
     var background = SKSpriteNode(imageNamed: "background")
     
@@ -87,10 +85,8 @@ class GameScene: SKScene {
         background.position = CGPoint(x: frame.size.width/2, y: frame.size.height/2)
         addChild(background)
         
-        // 3
         player.zPosition = 1
         player.position = CGPoint(x: size.width * 0.1, y: size.height * 0.1)
-        // 4
         addChild(player)
         
         physicsWorld.gravity = .zero
@@ -163,7 +159,7 @@ class GameScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // 1 - Choose one of the touches to work with
+        // Choose one of the touches to work with
         guard let touch = touches.first else {
             return
         }
@@ -172,7 +168,7 @@ class GameScene: SKScene {
         
         let touchLocation = touch.location(in: self)
         
-        // 2 - Set up initial location of projectile
+        // Set up initial location of projectile
         let projectile = SKSpriteNode(imageNamed: "fireball")
         projectile.zPosition = 2
         projectile.position = player.position
@@ -184,36 +180,35 @@ class GameScene: SKScene {
         projectile.physicsBody?.collisionBitMask = PhysicsCategory.none
         projectile.physicsBody?.usesPreciseCollisionDetection = true
         
-        // 3 - Determine offset of location to projectile
+        // Determine offset of location to projectile
         let offset = touchLocation - projectile.position
         
-        // 4 - Bail out if you are shooting down or backwards
+        // Bail out if you are shooting down or backwards
         if offset.x < 0 { return }
         
-        // 5 - OK to add now - you've double checked position
+        // OK to add now - you've double checked position
         addChild(projectile)
         
-        // 6 - Get the direction of where to shoot
+        // Get the direction of where to shoot
         let direction = offset.normalized()
         
         //Rotate projectile to make it look nicer
         let mathStuff = offset.y/offset.x
         projectile.zRotation = atan(mathStuff)
         
-        // 7 - Make it shoot far enough to be guaranteed off screen
+        // Make it shoot far enough to be guaranteed off screen
         let shootAmount = direction * 1000
         
-        // 8 - Add the shoot amount to the current position
+        // Add the shoot amount to the current position
         let realDest = shootAmount + projectile.position
         
-        // 9 - Create the actions
+        // Create the actions
         let actionMove = SKAction.move(to: realDest, duration: 1.0)
         let actionMoveDone = SKAction.removeFromParent()
         projectile.run(SKAction.sequence([actionMove, actionMoveDone]))
     }
     
     func projectileDidCollideWithMonster(projectile: SKSpriteNode, monster: SKSpriteNode) {
-        //print("Hit")
         projectile.removeFromParent()
         monster.removeFromParent()
         
@@ -225,8 +220,8 @@ class GameScene: SKScene {
             //view?.presentScene(gameOverScene, transition: reveal)
             for _ in 1...5 {
                 addMonster()
-                n += 30
             }
+            n += 30
         }
     }
 }
