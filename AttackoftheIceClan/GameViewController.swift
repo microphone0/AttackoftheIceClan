@@ -14,6 +14,8 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        var upgrade = Upgrade()
+        
         let scene = GameMenuScene(size: view.bounds.size)
         let skView = view as! SKView
         skView.showsFPS = true

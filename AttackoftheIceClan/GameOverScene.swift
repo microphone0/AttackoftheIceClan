@@ -41,10 +41,7 @@ class GameOverScene: SKScene {
         mainMenu.zPosition = 1
         mainMenu.position = CGPoint(x: size.width/2, y: size.height/3)
         addChild(mainMenu)
-        
-        // make buttons clickable and go to a new scene
-//
-        }
+    }
     
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
