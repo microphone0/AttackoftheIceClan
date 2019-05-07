@@ -11,11 +11,14 @@ import SpriteKit
 
 class GameOverScene: SKScene {
     
+    // MARK: Initialize variables
+    
     // Initialize buttons
     let playAgain = SKSpriteNode(imageNamed: "playAgain")
     let mainMenu = SKSpriteNode(imageNamed: "mainMenu")
     
     init(size: CGSize, won:Bool) {
+        
         super.init(size: size)
         
         // Make Background color white
@@ -41,28 +44,36 @@ class GameOverScene: SKScene {
         mainMenu.zPosition = 1
         mainMenu.position = CGPoint(x: size.width/2, y: size.height/3)
         addChild(mainMenu)
+        
     }
     
-
+    // MARK: Touch handler
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        // Get location of touch event
         let touch = touches.first
         let touchLocation = touch?.location(in: self)
         
+        // Check if touch location is in the play again button
         if playAgain.contains(touchLocation!) {
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let scene = GameScene(size: (self.view?.bounds.size)!)
             self.view?.presentScene(scene, transition:reveal)
         }
         
+        // Check if touch location is in the main menu button
         if mainMenu.contains(touchLocation!) {
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let scene = GameMenuScene(size: (self.view?.bounds.size)!)
             self.view?.presentScene(scene, transition:reveal)
         }
+        
     }
     
     // Run error if something happens requiring init
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }
