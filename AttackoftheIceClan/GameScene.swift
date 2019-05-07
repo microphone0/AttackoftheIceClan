@@ -21,9 +21,6 @@ struct PhysicsCategory {
 
 // Used to spawn more enemies
 var n = 30
-// Used to make the bullet span more the more that's added
-// Has to be type casted to CGFloat, so the math can be done with it
-var span = CGFloat(50)
 
 //MARK: Extension of class
 
@@ -237,91 +234,74 @@ class GameScene: SKScene {
         let actionMoveDone = SKAction.removeFromParent()
         projectile.run(SKAction.sequence([actionMove, actionMoveDone]))
         
+        print("Offset.x: \(offset.x)")
+        print("Offset.y: \(offset.y)")
+        
         var changeInDirection = true
-        var positive = false
-        var negative = false
+        var up = false
+        var down = false
+        // Used to make the bullet span more the more that's added
+        // Has to be type casted to CGFloat, so the math can be done with it
+        var span = CGFloat(50)
+        
         // If user has purchased bullet count upgrades then add the extra bullets when the player shoots
         if upgrade.bulletCount() > 0 {
             let numBullet = upgrade.bulletCount()
             
             for _ in 1...numBullet {
-                // Positive change in direction
+                let touchLocation2 = touch.location(in: self)
+                let projectile2 = SKSpriteNode(imageNamed: "fireball")
+                projectile2.zPosition = 2
+                projectile2.position = player.position
+                
+                projectile2.physicsBody = SKPhysicsBody(circleOfRadius: projectile.size.width/2)
+                projectile2.physicsBody?.isDynamic = true
+                projectile2.physicsBody?.categoryBitMask = PhysicsCategory.projectile
+                projectile2.physicsBody?.contactTestBitMask = PhysicsCategory.iceBullet
+                projectile2.physicsBody?.collisionBitMask = PhysicsCategory.none
+                projectile2.physicsBody?.usesPreciseCollisionDetection = true
+                addChild(projectile2)
+                
+                var offset2 = touchLocation2 - projectile2.position
+                
+                // If making a bullet above the center one
                 if changeInDirection {
-                    let touchLocation2 = touch.location(in: self)
-                    let projectile2 = SKSpriteNode(imageNamed: "fireball")
-                    projectile2.zPosition = 2
-                    projectile2.position = player.position
-                    
-                    projectile2.physicsBody = SKPhysicsBody(circleOfRadius: projectile.size.width/2)
-                    projectile2.physicsBody?.isDynamic = true
-                    projectile2.physicsBody?.categoryBitMask = PhysicsCategory.projectile
-                    projectile2.physicsBody?.contactTestBitMask = PhysicsCategory.iceBullet
-                    projectile2.physicsBody?.collisionBitMask = PhysicsCategory.none
-                    projectile2.physicsBody?.usesPreciseCollisionDetection = true
-                    addChild(projectile2)
-                    
-                    var offset2 = touchLocation2 - projectile2.position
-                    offset2.y = offset2.y + span
-                    offset2.x = offset2.x + span
-                    let direction2 = offset2.normalized()
-                    let mathstuff2 = direction2.y/direction2.x
-                    // If the angle is negative flip it, so the rotation can be set up correctly
-                    if (atan(mathstuff2) < 0) {
-                        projectile2.zRotation = atan(mathstuff2)*CGFloat.pi
-                    } else {
-                        projectile2.zRotation = atan(mathstuff2)
-                    }
-                    let shootAmount2 = direction2 * 1000
-                    let realDest2 = shootAmount2 + projectile2.position
-                    let actionMove = SKAction.move(to: realDest2, duration: 1.0)
-                    let actionMoveDone = SKAction.removeFromParent()
-                    projectile2.run(SKAction.sequence([actionMove, actionMoveDone]))
+                    offset2.y += span
+                    offset2.x -= span
                     
                     changeInDirection = false
-                    positive = true
+                    up = true
                 }
-                // Negative change in direction
+                // If making a bullet below the center one
                 else {
-                    let touchLocation2 = touch.location(in: self)
-                    let projectile2 = SKSpriteNode(imageNamed: "fireball")
-                    projectile2.zPosition = 2
-                    projectile2.position = player.position
-                    
-                    projectile2.physicsBody = SKPhysicsBody(circleOfRadius: projectile.size.width/2)
-                    projectile2.physicsBody?.isDynamic = true
-                    projectile2.physicsBody?.categoryBitMask = PhysicsCategory.projectile
-                    projectile2.physicsBody?.contactTestBitMask = PhysicsCategory.iceBullet
-                    projectile2.physicsBody?.collisionBitMask = PhysicsCategory.none
-                    projectile2.physicsBody?.usesPreciseCollisionDetection = true
-                    addChild(projectile2)
-                    
-                    var offset2 = touchLocation2 - projectile2.position
-                    offset2.y = offset2.y - span
-                    offset2.x = offset2.x - span
-                    let direction2 = offset2.normalized()
-                    let mathstuff2 = direction2.y/direction2.x
-                    // If the angle is negative flip it, so the rotation can be set up correctly
-                    if (atan(mathstuff2) < 0) {
-                        projectile2.zRotation = atan(mathstuff2)*CGFloat.pi
-                    } else {
-                        projectile2.zRotation = atan(mathstuff2)
-                    }
-                    let shootAmount2 = direction2 * 1000
-                    let realDest2 = shootAmount2 + projectile2.position
-                    let actionMove = SKAction.move(to: realDest2, duration: 1.0)
-                    let actionMoveDone = SKAction.removeFromParent()
-                    projectile2.run(SKAction.sequence([actionMove, actionMoveDone]))
+                    offset2.y -= span
+                    offset2.x += span
                     
                     changeInDirection = true
-                    negative = true
+                    down = true
                 }
-            }
-            
-            // If a bullet has spawned on both sides of the center bullet increase span so more bullets will appear
-            if positive && negative {
-                span += 50
-                positive = false
-                negative = false
+                
+                let direction2 = offset2.normalized()
+                let mathstuff2 = direction2.y/direction2.x
+                // If the angle is negative flip it, so the rotation can be set up correctly
+                if (atan(mathstuff2) < 0) {
+                    projectile2.zRotation = atan(mathstuff2)*CGFloat.pi
+                } else {
+                    projectile2.zRotation = atan(mathstuff2)
+                }
+                
+                let shootAmount2 = direction2 * 1000
+                let realDest2 = shootAmount2 + projectile2.position
+                let actionMove = SKAction.move(to: realDest2, duration: 1.0)
+                let actionMoveDone = SKAction.removeFromParent()
+                projectile2.run(SKAction.sequence([actionMove, actionMoveDone]))
+                
+                // If a bullet has spawned on both sides of the center bullet increase span so more bullets will appear
+                if up && down {
+                    span += 50
+                    up = false
+                    down = false
+                }
             }
         }
         
