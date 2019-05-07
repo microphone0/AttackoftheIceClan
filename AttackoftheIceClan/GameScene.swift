@@ -250,20 +250,24 @@ class GameScene: SKScene {
             let numBullet = upgrade.bulletCount()
             
             for _ in 1...numBullet {
-                let touchLocation2 = touch.location(in: self)
+                // Load the projectile
                 let projectile2 = SKSpriteNode(imageNamed: "fireball")
+                
+                // Set up the bullet
                 projectile2.zPosition = 2
                 projectile2.position = player.position
-                
                 projectile2.physicsBody = SKPhysicsBody(circleOfRadius: projectile.size.width/2)
                 projectile2.physicsBody?.isDynamic = true
                 projectile2.physicsBody?.categoryBitMask = PhysicsCategory.projectile
                 projectile2.physicsBody?.contactTestBitMask = PhysicsCategory.iceBullet
                 projectile2.physicsBody?.collisionBitMask = PhysicsCategory.none
                 projectile2.physicsBody?.usesPreciseCollisionDetection = true
+                
+                // Add the projectile
                 addChild(projectile2)
                 
-                var offset2 = touchLocation2 - projectile2.position
+                // Find new the offset of the second bullet
+                var offset2 = touchLocation - projectile.position
                 
                 // If making a bullet above the center one
                 if changeInDirection {
@@ -282,8 +286,10 @@ class GameScene: SKScene {
                     down = true
                 }
                 
+                // Get the direction of the second bullet
                 let direction2 = offset2.normalized()
                 let mathStuff2 = direction2.y/direction2.x
+                
                 // If the angle is negative flip it, so the rotation can be set up correctly
                 if (atan(mathStuff2) < 0) {
                     projectile2.zRotation = atan(mathStuff2)*CGFloat.pi
@@ -291,6 +297,7 @@ class GameScene: SKScene {
                     projectile2.zRotation = atan(mathStuff2)
                 }
                 
+                // Set up the rest of the variables to allow the second bullet to shoot in the right direction
                 let shootAmount2 = direction2 * 1000
                 let realDest2 = shootAmount2 + projectile2.position
                 let actionMove = SKAction.move(to: realDest2, duration: 1.0)
