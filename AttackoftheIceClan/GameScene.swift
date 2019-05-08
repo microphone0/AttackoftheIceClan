@@ -151,11 +151,11 @@ class GameScene: SKScene {
         // Create sprite
         let iceBullet = SKSpriteNode(imageNamed: "iceBall")
         
-        iceBullet.physicsBody = SKPhysicsBody(rectangleOf: iceBullet.size) // 1
-        iceBullet.physicsBody?.isDynamic = true // 2
-        iceBullet.physicsBody?.categoryBitMask = PhysicsCategory.iceBullet // 3
-        iceBullet.physicsBody?.contactTestBitMask = PhysicsCategory.projectile // 4
-        iceBullet.physicsBody?.collisionBitMask = PhysicsCategory.none // 5
+        iceBullet.physicsBody = SKPhysicsBody(rectangleOf: iceBullet.size)
+        iceBullet.physicsBody?.isDynamic = true
+        iceBullet.physicsBody?.categoryBitMask = PhysicsCategory.iceBullet
+        iceBullet.physicsBody?.contactTestBitMask = PhysicsCategory.projectile
+        iceBullet.physicsBody?.collisionBitMask = PhysicsCategory.none
         
         // Determine where to spawn the iceBullet along the Y axis
         let actualY = random(min: iceBullet.size.height/2, max: size.height - iceBullet.size.height/2)
