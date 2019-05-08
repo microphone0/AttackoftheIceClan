@@ -8,16 +8,19 @@
 
 import SpriteKit
 
-//MARK: Struct
+//MARK: Struct and Dictionaries
 
 struct PhysicsCategory {
     
-    static let none      : UInt32 = 0
-    static let all       : UInt32 = UInt32.max
-    static let iceBullet   : UInt32 = 0b1
-    static let projectile: UInt32 = 0b10
+    static let none       : UInt32 = 0
+    static let all        : UInt32 = UInt32.max
+    static let iceBullet  : UInt32 = 0b1
+    static let projectile : UInt32 = 0b10
     
 }
+
+// Used a dictionary to store how much piercing each bullet has (if any), also declare it without anything in it since no bullets have been made at this point
+var bulletDict: Dictionary<String?, Int> = [:]
 
 // Used to spawn more enemies
 var n = 30
@@ -97,6 +100,7 @@ class GameScene: SKScene {
     var background = SKSpriteNode(imageNamed: "background")
     var iceBulletDestroyed = 0
     var score: SKLabelNode!
+    var projectileName = "projectile"
     
     let upgrade = Upgrade()
     
@@ -206,15 +210,17 @@ class GameScene: SKScene {
         projectile.physicsBody?.contactTestBitMask = PhysicsCategory.iceBullet
         projectile.physicsBody?.collisionBitMask = PhysicsCategory.none
         projectile.physicsBody?.usesPreciseCollisionDetection = true
+        projectile.name = "projectile\(random())"
         
         // Determine offset of location to projectile
         let offset = touchLocation - projectile.position
         
-        // Bail out if you are shooting down or backwards
+        // Bail out if you are shooting too far down or backwards
         if offset.x < -100 { return }
         
         // OK to add now - you've double checked position
         addChild(projectile)
+        bulletDict.updateValue(upgrade.piercingCount(), forKey: projectile.name!)
         
         // Get the direction of where to shoot
         let direction = offset.normalized()
@@ -236,7 +242,10 @@ class GameScene: SKScene {
         // Create the actions
         let actionMove = SKAction.move(to: realDest, duration: 1.0)
         let actionMoveDone = SKAction.removeFromParent()
-        projectile.run(SKAction.sequence([actionMove, actionMoveDone]))
+        let actionRemoveDict = SKAction.run {
+            bulletDict.removeValue(forKey: projectile.name)
+        }
+        projectile.run(SKAction.sequence([actionMove, actionMoveDone, actionRemoveDict]))
         
         var changeInDirection = true
         var up = false
@@ -262,9 +271,11 @@ class GameScene: SKScene {
                 projectile2.physicsBody?.contactTestBitMask = PhysicsCategory.iceBullet
                 projectile2.physicsBody?.collisionBitMask = PhysicsCategory.none
                 projectile2.physicsBody?.usesPreciseCollisionDetection = true
+                projectile2.name = "projectile\(random())"
                 
                 // Add the projectile
                 addChild(projectile2)
+                bulletDict.updateValue(upgrade.piercingCount(), forKey: projectile2.name!)
                 
                 // Find new the offset of the second bullet
                 var offset2 = touchLocation - projectile.position
@@ -302,7 +313,10 @@ class GameScene: SKScene {
                 let realDest2 = shootAmount2 + projectile2.position
                 let actionMove = SKAction.move(to: realDest2, duration: 1.0)
                 let actionMoveDone = SKAction.removeFromParent()
-                projectile2.run(SKAction.sequence([actionMove, actionMoveDone]))
+                let actionRemoveDict = SKAction.run {
+                    bulletDict.removeValue(forKey: projectile2.name)
+                }
+                projectile2.run(SKAction.sequence([actionMove, actionMoveDone, actionRemoveDict]))
                 
                 // If a bullet has spawned on both sides of the center bullet increase span so more bullets will appear
                 if up && down {
@@ -317,7 +331,12 @@ class GameScene: SKScene {
     
     func projectileDidCollideWithIceBullet(projectile: SKSpriteNode, iceBullet: SKSpriteNode) {
         
-        projectile.removeFromParent()
+        if(bulletDict[projectile.name]! > 0) {
+            bulletDict[projectile.name]! -= 1
+        } else {
+            projectile.removeFromParent()
+            bulletDict.removeValue(forKey: projectile.name)
+        }
         iceBullet.removeFromParent()
         
         iceBulletDestroyed += 1

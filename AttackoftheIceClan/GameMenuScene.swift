@@ -47,7 +47,7 @@ class GameMenuScene: SKScene {
         shop.position = CGPoint(x: frame.size.width/2, y: frame.size.height/3)
         addChild(shop)
         
-        print(upgradeManager.bulletCount())
+        print(upgradeManager.piercingCount())
         
     }
     
@@ -62,6 +62,7 @@ class GameMenuScene: SKScene {
         // Check if touch event is in the shop button
         if shop.contains(touchLocation!) {
             print("Go to shop!!")
+            upgradeManager.incrementPiercingCount()
             upgradeManager.incrementBulletCount()
         }
         
