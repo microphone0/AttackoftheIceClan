@@ -29,6 +29,9 @@ class GameMenuScene: SKScene {
         background.position = CGPoint(x: frame.size.width/2, y: frame.size.height/2)
         addChild(background)
         
+        // Change background color to black to make menu look nicer
+        backgroundColor = UIColor.black
+        
         // Add title
         title.text = "Attack of the Ice Clan!"
         title.fontColor = UIColor.black

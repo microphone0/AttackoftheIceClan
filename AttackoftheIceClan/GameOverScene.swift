@@ -13,16 +13,21 @@ class GameOverScene: SKScene {
     
     // MARK: Initialize variables
     
-    // Initialize buttons
+    // Initialize background and buttons
     let playAgain = SKSpriteNode(imageNamed: "playAgain")
     let mainMenu = SKSpriteNode(imageNamed: "mainMenu")
+    let background = SKSpriteNode(imageNamed: "gameOverBackground")
     
     init(size: CGSize, won:Bool) {
         
         super.init(size: size)
         
-        // Make Background color white
-        backgroundColor = SKColor.white
+        // Set the background
+        background.zPosition = -1
+        background.size.width = size.width
+        background.size.height = size.height
+        background.position = CGPoint(x: size.width/2, y: size.height/2)
+        addChild(background)
         
         // Set display message based on if player won or lost
         let message = won ? "You have defeated the Ice Clan!" : "The Ice Clan has won. :("

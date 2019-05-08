@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-//MARK: Struct and Dictionaries
+// MARK: Struct and Dictionaries
 
 struct PhysicsCategory {
     
@@ -25,7 +25,7 @@ var bulletDict: Dictionary<String?, Int> = [:]
 // Used to spawn more enemies
 var n = 30
 
-//MARK: Extension of class
+// MARK: Extension of class
 
 extension GameScene: SKPhysicsContactDelegate {
     
@@ -53,7 +53,7 @@ extension GameScene: SKPhysicsContactDelegate {
     
 }
 
-//MARK: Math functions for CGPoint
+// MARK: Math functions for CGPoint
 
 func +(left: CGPoint, right: CGPoint) -> CGPoint {
     return CGPoint(x: left.x + right.x, y: left.y + right.y)
@@ -91,7 +91,7 @@ extension CGPoint {
     
 }
 
-//MARK: Class
+// MARK: Class
 
 class GameScene: SKScene {
     
@@ -186,7 +186,7 @@ class GameScene: SKScene {
         
     }
     
-    //MARK: Touch handler
+    // MARK: Touch handler
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
@@ -225,7 +225,7 @@ class GameScene: SKScene {
         // Get the direction of where to shoot
         let direction = offset.normalized()
         
-        //Rotate projectile to make it look nicer
+        // Rotate projectile to make it look nicer
         let mathStuff = offset.y/offset.x
         if (atan(mathStuff) < 0) {
             projectile.zRotation = atan(mathStuff)*CGFloat.pi
@@ -342,9 +342,9 @@ class GameScene: SKScene {
         iceBulletDestroyed += 1
         score.text = "Score: \(iceBulletDestroyed)"
         
-        //If amount of iceBullets is equal to n then spawn a bunch at once
+        // If amount of iceBullets is equal to n then spawn a bunch at once
         if iceBulletDestroyed == n {
-            //Uncomment 3 lines below for win transition
+            // Uncomment 3 lines below for win transition
             //let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             //let gameOverScene = GameOverScene(size: self.size, won: true)
             //view?.presentScene(gameOverScene, transition: reveal)

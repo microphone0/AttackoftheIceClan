@@ -13,7 +13,7 @@ import Foundation
 
 class Upgrade {
     
-    //MARK: Properties
+    // MARK: Properties
     
     private var piercing: Int?
     
@@ -21,13 +21,16 @@ class Upgrade {
     
     private var defaults = UserDefaults.standard
     
-    //MARK: Methods
+    private var coins: Int?
+    
+    // MARK: Methods
     
     /** Retrieve data from persistent store */
     private func retrieveData() {
         
         piercing = defaults.integer(forKey: "piercing")
         bullets = defaults.integer(forKey: "bullets")
+        coins = defaults.integer(forKey: "coins")
         
     }
     
@@ -37,6 +40,7 @@ class Upgrade {
         
         defaults.set(piercing, forKey: "piercing")
         defaults.set(bullets, forKey: "bullets")
+        defaults.set(coins, forKey: "coins")
         
     }
     
@@ -81,8 +85,24 @@ class Upgrade {
         
     }
     
+    // Get number of coins that can be shot at once
+    func coinCount() -> Int {
+        
+        retrieveData()
+        if let coins = coins {
+            return coins
+        } else {
+            return 0
+        }
+        
+    }
     
-    
-    
+    // Increment the player's amount of coins
+    func incrementCoinCount() {
+        
+        coins = coinCount() + 1
+        saveData()
+        
+    }
     
 }
