@@ -50,8 +50,6 @@ class GameMenuScene: SKScene {
         shop.position = CGPoint(x: frame.size.width/2, y: frame.size.height/3)
         addChild(shop)
         
-        print(upgradeManager.piercingCount())
-        
     }
     
     // MARK: Touch handler
@@ -64,9 +62,9 @@ class GameMenuScene: SKScene {
         
         // Check if touch event is in the shop button
         if shop.contains(touchLocation!) {
-            print("Go to shop!!")
-            upgradeManager.incrementPiercingCount()
-            upgradeManager.incrementBulletCount()
+            let reveal = SKTransition.flipHorizontal(withDuration: 1.0)
+            let scene = ShopScene(size: size)
+            self.view?.presentScene(scene, transition:reveal)
         }
         
         // Check if touch event is in the play button

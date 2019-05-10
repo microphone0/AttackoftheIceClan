@@ -25,6 +25,9 @@ var bulletDict: Dictionary<String?, Int> = [:]
 // Used to spawn more enemies
 var n = 30
 
+let upgrade = Upgrade()
+var iceBulletDestroyed = 0
+
 // MARK: Extension of class
 
 extension GameScene: SKPhysicsContactDelegate {
@@ -98,11 +101,8 @@ class GameScene: SKScene {
     // Initialize variables
     let player = SKSpriteNode(imageNamed: "fireMage")
     var background = SKSpriteNode(imageNamed: "background")
-    var iceBulletDestroyed = 0
-    var score: SKLabelNode!
+    var coins: SKLabelNode!
     var projectileName = "projectile"
-    
-    let upgrade = Upgrade()
     
     override func didMove(to view: SKView) {
         
@@ -128,13 +128,13 @@ class GameScene: SKScene {
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
         
-        score = SKLabelNode(fontNamed: "Chalkduster")
-        score.zPosition = 1
-        score.text = "Score: \(iceBulletDestroyed)"
-        score.fontColor = UIColor.black
-        score.fontSize = 30
-        score.position = CGPoint(x: size.width * 0.1, y: size.height * 0.9)
-        addChild(score)
+        coins = SKLabelNode(fontNamed: "Chalkduster")
+        coins.zPosition = 1
+        coins.text = "Coins: \(iceBulletDestroyed)"
+        coins.fontColor = UIColor.black
+        coins.fontSize = 30
+        coins.position = CGPoint(x: size.width * 0.1, y: size.height * 0.9)
+        addChild(coins)
         
     }
     
@@ -178,6 +178,7 @@ class GameScene: SKScene {
         
         let loseAction = SKAction.run() { [weak self] in
             guard let `self` = self else { return }
+            upgrade.incrementCoinCount(gameplayCoins: iceBulletDestroyed)
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size, won: false)
             self.view?.presentScene(gameOverScene, transition: reveal)
@@ -250,6 +251,7 @@ class GameScene: SKScene {
         var changeInDirection = true
         var up = false
         var down = false
+        
         // Used to make the bullet span more the more that's added
         // Has to be type casted to CGFloat, so the math can be done with it
         var span = CGFloat(50)
@@ -340,7 +342,7 @@ class GameScene: SKScene {
         iceBullet.removeFromParent()
         
         iceBulletDestroyed += 1
-        score.text = "Score: \(iceBulletDestroyed)"
+        coins.text = "Coins: \(iceBulletDestroyed)"
         
         // If amount of iceBullets is equal to n then spawn a bunch at once
         if iceBulletDestroyed == n {

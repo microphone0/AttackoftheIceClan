@@ -24,8 +24,7 @@ class GameOverScene: SKScene {
         
         // Set the background
         background.zPosition = -1
-        background.size.width = size.width
-        background.size.height = size.height
+        background.size = CGSize(width: size.width, height: size.height)
         background.position = CGPoint(x: size.width/2, y: size.height/2)
         addChild(background)
         
