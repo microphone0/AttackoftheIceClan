@@ -19,15 +19,6 @@ struct PhysicsCategory {
     
 }
 
-// Used a dictionary to store how much piercing each bullet has (if any), also declare it without anything in it since no bullets have been made at this point
-var bulletDict: Dictionary<String?, Int> = [:]
-
-// Used to spawn more enemies
-var n = 30
-
-let upgrade = Upgrade()
-var iceBulletDestroyed = 0
-
 // MARK: Extension of class
 
 extension GameScene: SKPhysicsContactDelegate {
@@ -103,6 +94,15 @@ class GameScene: SKScene {
     var background = SKSpriteNode(imageNamed: "background")
     var coins: SKLabelNode!
     var projectileName = "projectile"
+    let scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+    let upgrade = Upgrade()
+    var score = 0
+    
+    // Used a dictionary to store how much piercing each bullet has (if any), also declare it without anything in it since no bullets have been made at this point
+    var bulletDict: Dictionary<String?, Int> = [:]
+    
+    // Used to spawn more enemies
+    var n = 30
     
     override func didMove(to view: SKView) {
         
@@ -130,11 +130,18 @@ class GameScene: SKScene {
         
         coins = SKLabelNode(fontNamed: "Chalkduster")
         coins.zPosition = 1
-        coins.text = "Coins: \(iceBulletDestroyed)"
+        coins.text = "Coins: \(upgrade.coinCount())"
         coins.fontColor = UIColor.black
         coins.fontSize = 30
-        coins.position = CGPoint(x: size.width * 0.1, y: size.height * 0.9)
+        coins.position = CGPoint(x: size.width*0.1, y: size.height*0.9)
         addChild(coins)
+        
+        scoreLabel.zPosition = 1
+        scoreLabel.text = "Score: \(score)"
+        scoreLabel.fontColor = UIColor.black
+        scoreLabel.fontSize = 30
+        scoreLabel.position = CGPoint(x: size.width/2, y: size.height*0.9)
+        addChild(scoreLabel)
         
     }
     
@@ -178,7 +185,6 @@ class GameScene: SKScene {
         
         let loseAction = SKAction.run() { [weak self] in
             guard let `self` = self else { return }
-            upgrade.incrementCoinCount(gameplayCoins: iceBulletDestroyed)
             let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
             let gameOverScene = GameOverScene(size: self.size, won: false)
             self.view?.presentScene(gameOverScene, transition: reveal)
@@ -235,7 +241,7 @@ class GameScene: SKScene {
         }
         
         // Make it shoot far enough to be guaranteed off screen
-        let shootAmount = direction * 1000
+        let shootAmount = direction * size.width
         
         // Add the shoot amount to the current position
         let realDest = shootAmount + projectile.position
@@ -244,7 +250,7 @@ class GameScene: SKScene {
         let actionMove = SKAction.move(to: realDest, duration: 1.0)
         let actionMoveDone = SKAction.removeFromParent()
         let actionRemoveDict = SKAction.run {
-            bulletDict.removeValue(forKey: projectile.name)
+            self.bulletDict.removeValue(forKey: projectile.name)
         }
         projectile.run(SKAction.sequence([actionMove, actionMoveDone, actionRemoveDict]))
         
@@ -311,12 +317,12 @@ class GameScene: SKScene {
                 }
                 
                 // Set up the rest of the variables to allow the second bullet to shoot in the right direction
-                let shootAmount2 = direction2 * 1000
+                let shootAmount2 = direction2 * size.width
                 let realDest2 = shootAmount2 + projectile2.position
                 let actionMove = SKAction.move(to: realDest2, duration: 1.0)
                 let actionMoveDone = SKAction.removeFromParent()
                 let actionRemoveDict = SKAction.run {
-                    bulletDict.removeValue(forKey: projectile2.name)
+                    self.bulletDict.removeValue(forKey: projectile2.name)
                 }
                 projectile2.run(SKAction.sequence([actionMove, actionMoveDone, actionRemoveDict]))
                 
@@ -341,15 +347,13 @@ class GameScene: SKScene {
         }
         iceBullet.removeFromParent()
         
-        iceBulletDestroyed += 1
-        coins.text = "Coins: \(iceBulletDestroyed)"
+        upgrade.incrementCoinCount()
+        score = score + 1
+        coins.text = "Coins: \(upgrade.coinCount())"
+        scoreLabel.text = "Score: \(score)"
         
         // If amount of iceBullets is equal to n then spawn a bunch at once
-        if iceBulletDestroyed == n {
-            // Uncomment 3 lines below for win transition
-            //let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-            //let gameOverScene = GameOverScene(size: self.size, won: true)
-            //view?.presentScene(gameOverScene, transition: reveal)
+        if score == n {
             for _ in 1...5 {
                 addIceBullet()
             }

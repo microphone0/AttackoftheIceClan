@@ -146,9 +146,9 @@ class Upgrade {
     }
     
     // Increment the player's amount of coins
-    func incrementCoinCount(gameplayCoins: Int) {
+    func incrementCoinCount() {
         
-        coins = coinCount() + gameplayCoins
+        coins = coinCount() + 1
         saveData()
         
     }
@@ -169,4 +169,12 @@ class Upgrade {
         
     }
     
+    // MARK: Decrementers
+    
+    func decrementCoinCount( price: Int) {
+        
+        coins = coinCount() - price
+        saveData()
+        
+    }
 }

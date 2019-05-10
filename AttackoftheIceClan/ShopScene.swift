@@ -22,6 +22,7 @@ class ShopScene: SKScene {
     let backButton = SKSpriteNode(imageNamed: "back")
     
     let title = SKLabelNode(text: " ")
+    let cointCount = SKLabelNode(text: " ")
     let numBulletLabel = SKLabelNode(text: " ")
     let piercingLabel = SKLabelNode(text: " ")
     
@@ -43,13 +44,21 @@ class ShopScene: SKScene {
         backButton.position = CGPoint(x: 60, y: size.height-60)
         addChild(backButton)
         
-        // Add text for the number of piercing upgrade
+        // Added title
         title.text = "Welcome the Fiery Bazaar!"
         title.zPosition = 1
         title.fontName = "Rockwell Bold"
         title.fontSize = 30
         title.position = CGPoint(x: (size.width/2), y: size.height-60)
         addChild(title)
+        
+        // Add text for the number of coins
+        cointCount.text = "Coins: \(upgradeManger.coinCount())"
+        cointCount.zPosition = 1
+        cointCount.fontName = "Rockwell Bold"
+        cointCount.fontSize = 27
+        cointCount.position = CGPoint(x: (size.width/2), y: size.height-100)
+        addChild(cointCount)
         
         // Add text for the number of bullets upgrade
         numBulletLabel.text = "Purchase additional bullets? \(upgradeManger.bulletCostCount()) Coins"
@@ -89,17 +98,33 @@ class ShopScene: SKScene {
         
         // Check if touch event is in the back button
         if backButton.contains(touchLocation!) {
-            
+            let reveal = SKTransition.flipHorizontal(withDuration: 1.0)
+            let scene = GameMenuScene(size: size)
+            self.view?.presentScene(scene, transition:reveal)
         }
         
         // Check if touch event is in the buy button for bullets
         if numBulletButton.contains(touchLocation!) {
-           
+            if upgradeManger.coinCount() >= upgradeManger.bulletCostCount() {
+                // Update all the labels if user has enough coins and upgrade the bullet count
+                upgradeManger.incrementBulletCount()
+                upgradeManger.decrementCoinCount(price: upgradeManger.bulletCostCount())
+                upgradeManger.incrementBulletCostCount()
+                numBulletLabel.text = "Purchase additional bullets? \(upgradeManger.bulletCostCount()) Coins"
+                cointCount.text = "Coins: \(upgradeManger.coinCount())"
+            }
         }
         
         // Check if touch event is in the buy button for piercing
         if piercingButton.contains(touchLocation!) {
-            
+            if upgradeManger.coinCount() >= upgradeManger.piercingCostCount() {
+                // Update all the labels if user has enough coins and upgrade the piercing
+                upgradeManger.incrementPiercingCount()
+                upgradeManger.decrementCoinCount(price: upgradeManger.piercingCostCount())
+                upgradeManger.incrementPiercingCostCount()
+                piercingLabel.text = "Purchase additional bullets? \(upgradeManger.piercingCostCount()) Coins"
+                cointCount.text = "Coins: \(upgradeManger.coinCount())"
+            }
         }
         
     }
