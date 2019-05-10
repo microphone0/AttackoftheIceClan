@@ -29,7 +29,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attack of the Ice Clan" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6T-p2-WGV">
-                                <rect key="frame" x="307" y="155" width="312" height="34"/>
+                                <rect key="frame" x="307" y="155" width="290" height="34"/>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="28"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -44,7 +44,7 @@
                             <constraint firstItem="tkd-Ki-maM" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="-64" id="OI0-rS-fZy"/>
                             <constraint firstItem="N6T-p2-WGV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="263" id="Vql-WO-CqY"/>
                             <constraint firstItem="tkd-Ki-maM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="de9-Hn-zRO"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="N6T-p2-WGV" secondAttribute="trailing" constant="233" id="f6A-9g-Iqj"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="N6T-p2-WGV" secondAttribute="trailing" constant="255" id="f6A-9g-Iqj"/>
                             <constraint firstItem="7uY-59-yTF" firstAttribute="top" secondItem="N6T-p2-WGV" secondAttribute="bottom" constant="24" id="ljY-k9-gf0"/>
                             <constraint firstAttribute="trailing" secondItem="tkd-Ki-maM" secondAttribute="trailing" id="whm-4O-dKm"/>
                         </constraints>
