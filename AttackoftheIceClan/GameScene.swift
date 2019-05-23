@@ -106,14 +106,17 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         
+        // Set the background
         background.zPosition = 0
         background.position = CGPoint(x: frame.size.width/2, y: frame.size.height/2)
         addChild(background)
         
+        // Add the player
         player.zPosition = 1
         player.position = CGPoint(x: size.width * 0.1, y: size.height * 0.1)
         addChild(player)
         
+        // Set the physics
         physicsWorld.gravity = .zero
         physicsWorld.contactDelegate = self
         
@@ -124,18 +127,21 @@ class GameScene: SKScene {
                 ])
         ))
         
+        // Add music
         let backgroundMusic = SKAudioNode(fileNamed: "Komiku_Battle_of_Pogs.mp3")
         backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
         
+        // Add coins label
         coins = SKLabelNode(fontNamed: "Chalkduster")
         coins.zPosition = 1
         coins.text = "Coins: \(upgrade.coinCount())"
         coins.fontColor = UIColor.black
         coins.fontSize = 30
-        coins.position = CGPoint(x: size.width*0.1, y: size.height*0.9)
+        coins.position = CGPoint(x: 160, y: size.height*0.9)
         addChild(coins)
         
+        // Add score label
         scoreLabel.zPosition = 1
         scoreLabel.text = "Score: \(score)"
         scoreLabel.fontColor = UIColor.black

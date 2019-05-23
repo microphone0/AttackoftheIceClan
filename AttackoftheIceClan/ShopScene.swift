@@ -21,10 +21,12 @@ class ShopScene: SKScene {
     let piercingButton = SKSpriteNode(imageNamed: "buy")
     let backButton = SKSpriteNode(imageNamed: "back")
     
-    let title = SKLabelNode(text: " ")
-    let cointCount = SKLabelNode(text: " ")
-    let numBulletLabel = SKLabelNode(text: " ")
-    let piercingLabel = SKLabelNode(text: " ")
+    let title = SKLabelNode(fontNamed: "Rockwell Bold")
+    let coinCount = SKLabelNode(fontNamed: "Rockwell Bold")
+    let numBulletLabel = SKLabelNode(fontNamed: "Rockwell Bold")
+    let piercingLabel = SKLabelNode(fontNamed: "Rockwell Bold")
+    let bulletCount = SKLabelNode(fontNamed: "Rockwell Bold")
+    let piercingCount = SKLabelNode(fontNamed: "Rockwell Bold")
     
     override init(size: CGSize) {
         
@@ -47,26 +49,30 @@ class ShopScene: SKScene {
         // Added title
         title.text = "Welcome the Fiery Bazaar!"
         title.zPosition = 1
-        title.fontName = "Rockwell Bold"
         title.fontSize = 30
         title.position = CGPoint(x: (size.width/2), y: size.height-60)
         addChild(title)
         
         // Add text for the number of coins
-        cointCount.text = "Coins: \(upgradeManger.coinCount())"
-        cointCount.zPosition = 1
-        cointCount.fontName = "Rockwell Bold"
-        cointCount.fontSize = 27
-        cointCount.position = CGPoint(x: (size.width/2), y: size.height-100)
-        addChild(cointCount)
+        coinCount.text = "Coins: \(upgradeManger.coinCount())"
+        coinCount.zPosition = 1
+        coinCount.fontSize = 27
+        coinCount.position = CGPoint(x: (size.width/2), y: size.height-100)
+        addChild(coinCount)
         
         // Add text for the number of bullets upgrade
         numBulletLabel.text = "Purchase additional bullets? \(upgradeManger.bulletCostCount()) Coins"
         numBulletLabel.zPosition = 1
-        numBulletLabel.fontName = "Rockwell Bold"
         numBulletLabel.fontSize = 25
         numBulletLabel.position = CGPoint(x: (size.width/3), y: ((size.height/3)*2)-40)
         addChild(numBulletLabel)
+        
+        // Add text to let the user know how many upgrades they've bought
+        bulletCount.text = "Number of bullets: \(upgradeManger.bulletCount())"
+        bulletCount.zPosition = 1
+        bulletCount.fontSize = 20
+        bulletCount.position = CGPoint(x: (size.width/3)-140, y: ((size.height/3)*2)-70)
+        addChild(bulletCount)
         
         // Button to purchase more bullets
         numBulletButton.zPosition = 1
@@ -77,10 +83,16 @@ class ShopScene: SKScene {
         // Add text for the number of piercing upgrade
         piercingLabel.text = "Purchase the piering upgrade? \(upgradeManger.piercingCostCount()) Coins"
         piercingLabel.zPosition = 1
-        piercingLabel.fontName = "Rockwell Bold"
         piercingLabel.fontSize = 25
-        piercingLabel.position = CGPoint(x: (size.width/3), y: (size.height/3)-40)
+        piercingLabel.position = CGPoint(x: (size.width/3)+15, y: (size.height/3)-40)
         addChild(piercingLabel)
+        
+        // Add text to let the user know how many upgrades they've bought
+        piercingCount.text = "Number of piercing: \(upgradeManger.piercingCount())"
+        piercingCount.zPosition = 1
+        piercingCount.fontSize = 20
+        piercingCount.position = CGPoint(x: (size.width/3)-131, y: (size.height/3)-70)
+        addChild(piercingCount)
         
         // Button to purchase more piercing
         piercingButton.zPosition = 1
@@ -111,7 +123,8 @@ class ShopScene: SKScene {
                 upgradeManger.decrementCoinCount(price: upgradeManger.bulletCostCount())
                 upgradeManger.incrementBulletCostCount()
                 numBulletLabel.text = "Purchase additional bullets? \(upgradeManger.bulletCostCount()) Coins"
-                cointCount.text = "Coins: \(upgradeManger.coinCount())"
+                bulletCount.text = "Number of piercing: \(upgradeManger.bulletCount())"
+                coinCount.text = "Coins: \(upgradeManger.coinCount())"
             }
         }
         
@@ -123,7 +136,8 @@ class ShopScene: SKScene {
                 upgradeManger.decrementCoinCount(price: upgradeManger.piercingCostCount())
                 upgradeManger.incrementPiercingCostCount()
                 piercingLabel.text = "Purchase additional bullets? \(upgradeManger.piercingCostCount()) Coins"
-                cointCount.text = "Coins: \(upgradeManger.coinCount())"
+                piercingCount.text = "Number of piercing: \(upgradeManger.piercingCount())"
+                coinCount.text = "Coins: \(upgradeManger.coinCount())"
             }
         }
         
