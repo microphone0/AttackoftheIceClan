@@ -110,7 +110,7 @@ class ShopScene: SKScene {
         
         
         
-        // Add text for the number of piercing upgrade
+        // Add text for the number of radius upgrade
         radiusLabel.text = "Purchase the radius upgrade? \(upgradeManger.radiusCostCount()) Coins"
         radiusLabel.zPosition = 1
         radiusLabel.fontSize = 25
@@ -124,7 +124,7 @@ class ShopScene: SKScene {
         radiusCount.position = CGPoint(x: (size.width/3)-140, y: (size.height/3)-70)
         addChild(radiusCount)
         
-        // Button to purchase more piercing
+        // Button to purchase more radius
         radiusButton.zPosition = 1
         radiusButton.size = CGSize(width: 100, height: 50)
         radiusButton.position = CGPoint(x: ((size.width/3)*2)+100, y: (size.height/3)-30)
@@ -167,6 +167,19 @@ class ShopScene: SKScene {
                 upgradeManger.incrementPiercingCostCount()
                 piercingLabel.text = "Purchase additional bullets? \(upgradeManger.piercingCostCount()) Coins"
                 piercingCount.text = "Number of piercing: \(upgradeManger.piercingCount())"
+                coinCount.text = "Coins: \(upgradeManger.coinCount())"
+            }
+        }
+        
+        // Check if touch event is in the buy button for radius
+        if radiusButton.contains(touchLocation!) {
+            if upgradeManger.coinCount() >= upgradeManger.radiusCostCount() {
+                // Update all the labels if user has enough coins and upgrade the piercing
+                upgradeManger.incrementRadiusCount()
+                upgradeManger.decrementCoinCount(price: upgradeManger.radiusCostCount())
+                upgradeManger.incrementRadiusCostCount()
+                radiusLabel.text = "Purchase additional bullets? \(upgradeManger.radiusCostCount()) Coins"
+                radiusCount.text = "Number of piercing: \(upgradeManger.radiusCount())"
                 coinCount.text = "Coins: \(upgradeManger.coinCount())"
             }
         }
