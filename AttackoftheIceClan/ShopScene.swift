@@ -18,9 +18,10 @@ class ShopScene: SKScene {
     
     let background = SKSpriteNode(imageNamed: "shopBackground")
     
+    let backButton = SKSpriteNode(imageNamed: "back")
     let numBulletButton = SKSpriteNode(imageNamed: "buy")
     let piercingButton = SKSpriteNode(imageNamed: "buy")
-    let backButton = SKSpriteNode(imageNamed: "back")
+    let radiusButton = SKSpriteNode(imageNamed: "buy")
     
     let title = SKLabelNode(fontNamed: "Rockwell Bold")
     let coinCount = SKLabelNode(fontNamed: "Rockwell Bold")
@@ -28,7 +29,8 @@ class ShopScene: SKScene {
     let bulletCount = SKLabelNode(fontNamed: "Rockwell Bold")
     let piercingLabel = SKLabelNode(fontNamed: "Rockwell Bold")
     let piercingCount = SKLabelNode(fontNamed: "Rockwell Bold")
-    
+    let radiusLabel = SKLabelNode(fontNamed: "Rockwell Bold")
+    let radiusCount = SKLabelNode(fontNamed: "Rockwell Bold")
     
     override init(size: CGSize) {
         
@@ -62,6 +64,8 @@ class ShopScene: SKScene {
         coinCount.position = CGPoint(x: (size.width/2), y: size.height-100)
         addChild(coinCount)
         
+        
+        
         // Add text for the number of bullets upgrade
         numBulletLabel.text = "Purchase additional bullets? \(upgradeManger.bulletCostCount()) Coins"
         numBulletLabel.zPosition = 1
@@ -82,25 +86,49 @@ class ShopScene: SKScene {
         numBulletButton.position = CGPoint(x: ((size.width/3)*2)+100, y: ((size.height/3)*2)-30)
         addChild(numBulletButton)
         
+        
+        
         // Add text for the number of piercing upgrade
         piercingLabel.text = "Purchase the piering upgrade? \(upgradeManger.piercingCostCount()) Coins"
         piercingLabel.zPosition = 1
         piercingLabel.fontSize = 25
-        piercingLabel.position = CGPoint(x: (size.width/3)+15, y: (size.height/3)-40)
+        piercingLabel.position = CGPoint(x: (size.width/3)+15, y: (size.height/2)-40)
         addChild(piercingLabel)
         
         // Add text to let the user know how many upgrades they've bought
         piercingCount.text = "Number of piercing: \(upgradeManger.piercingCount())"
         piercingCount.zPosition = 1
         piercingCount.fontSize = 20
-        piercingCount.position = CGPoint(x: (size.width/3)-131, y: (size.height/3)-70)
+        piercingCount.position = CGPoint(x: (size.width/3)-131, y: (size.height/2)-70)
         addChild(piercingCount)
         
         // Button to purchase more piercing
         piercingButton.zPosition = 1
         piercingButton.size = CGSize(width: 100, height: 50)
-        piercingButton.position = CGPoint(x: ((size.width/3)*2)+100, y: (size.height/3)-30)
+        piercingButton.position = CGPoint(x: ((size.width/3)*2)+100, y: (size.height/2)-30)
         addChild(piercingButton)
+        
+        
+        
+        // Add text for the number of piercing upgrade
+        radiusLabel.text = "Purchase the radius upgrade? \(upgradeManger.radiusCostCount()) Coins"
+        radiusLabel.zPosition = 1
+        radiusLabel.fontSize = 25
+        radiusLabel.position = CGPoint(x: (size.width/3)+10, y: (size.height/3)-40)
+        addChild(radiusLabel)
+        
+        // Add text to let the user know how many upgrades they've bought
+        radiusCount.text = "Number of radius: \(upgradeManger.radiusCount())"
+        radiusCount.zPosition = 1
+        radiusCount.fontSize = 20
+        radiusCount.position = CGPoint(x: (size.width/3)-140, y: (size.height/3)-70)
+        addChild(radiusCount)
+        
+        // Button to purchase more piercing
+        radiusButton.zPosition = 1
+        radiusButton.size = CGSize(width: 100, height: 50)
+        radiusButton.position = CGPoint(x: ((size.width/3)*2)+100, y: (size.height/3)-30)
+        addChild(radiusButton)
         
     }
     
