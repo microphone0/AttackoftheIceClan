@@ -19,13 +19,13 @@ class Upgrade {
     
     private var coins: Int?
     
-    private var piercing: Int?
-    
-    private var piercingCost: Int?
-    
     private var bullets: Int?
     
     private var bulletCost: Int?
+    
+    private var piercing: Int?
+    
+    private var piercingCost: Int?
     
     private var radius: Int?
     
@@ -64,10 +64,10 @@ class Upgrade {
     /** Save data for persistence */
     private func saveData() {
         
-        defaults.set(piercing, forKey: "piercing")
-        defaults.set(bullets, forKey: "bullets")
         defaults.set(coins, forKey: "coins")
+        defaults.set(bullets, forKey: "bullets")
         defaults.set(bulletCost, forKey: "bulletCost")
+        defaults.set(piercing, forKey: "piercing")
         defaults.set(piercingCost, forKey: "piercingCost")
         defaults.set(radius, forKey: "radius")
         defaults.set(radiusCost, forKey: "radiusCost")
@@ -84,30 +84,6 @@ class Upgrade {
             return coins
         } else {
             return 0
-        }
-        
-    }
-    
-    /** Get number of enemies that can be hit with one bullet */
-    func piercingCount() -> Int {
-        
-        retrieveData()
-        if let piercing = piercing {
-            return piercing
-        } else {
-            return 0
-        }
-        
-    }
-    
-    // Get cost for piercing
-    func piercingCostCount() -> Int {
-        
-        retrieveData()
-        if let piercingCost = piercingCost {
-            return piercingCost
-        } else {
-            return 50
         }
         
     }
@@ -130,6 +106,30 @@ class Upgrade {
         retrieveData()
         if let bulletCost = bulletCost {
             return bulletCost
+        } else {
+            return 50
+        }
+        
+    }
+    
+    /** Get number of enemies that can be hit with one bullet */
+    func piercingCount() -> Int {
+        
+        retrieveData()
+        if let piercing = piercing {
+            return piercing
+        } else {
+            return 0
+        }
+        
+    }
+    
+    // Get cost for piercing
+    func piercingCostCount() -> Int {
+        
+        retrieveData()
+        if let piercingCost = piercingCost {
+            return piercingCost
         } else {
             return 50
         }
@@ -170,22 +170,6 @@ class Upgrade {
         
     }
     
-    /** Increment the player's piercing ability */
-    func incrementPiercingCount() {
-        
-        piercing = piercingCount() + 1
-        saveData()
-        
-    }
-    
-    // Increment the player's amount of piercing cost
-    func incrementPiercingCostCount() {
-        
-        piercingCost = piercingCostCount() + 50
-        saveData()
-        
-    }
-    
     /** Increment the player's number of bullets */
     func incrementBulletCount() {
         
@@ -198,6 +182,22 @@ class Upgrade {
     func incrementBulletCostCount() {
         
         bulletCost = bulletCostCount() + 50
+        saveData()
+        
+    }
+    
+    /** Increment the player's piercing ability */
+    func incrementPiercingCount() {
+        
+        piercing = piercingCount() + 1
+        saveData()
+        
+    }
+    
+    // Increment the player's amount of piercing cost
+    func incrementPiercingCostCount() {
+        
+        piercingCost = piercingCostCount() + 50
         saveData()
         
     }

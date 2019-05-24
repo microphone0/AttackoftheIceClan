@@ -17,6 +17,7 @@ class ShopScene: SKScene {
     let upgradeManger = Upgrade()
     
     let background = SKSpriteNode(imageNamed: "shopBackground")
+    
     let numBulletButton = SKSpriteNode(imageNamed: "buy")
     let piercingButton = SKSpriteNode(imageNamed: "buy")
     let backButton = SKSpriteNode(imageNamed: "back")
@@ -24,9 +25,10 @@ class ShopScene: SKScene {
     let title = SKLabelNode(fontNamed: "Rockwell Bold")
     let coinCount = SKLabelNode(fontNamed: "Rockwell Bold")
     let numBulletLabel = SKLabelNode(fontNamed: "Rockwell Bold")
-    let piercingLabel = SKLabelNode(fontNamed: "Rockwell Bold")
     let bulletCount = SKLabelNode(fontNamed: "Rockwell Bold")
+    let piercingLabel = SKLabelNode(fontNamed: "Rockwell Bold")
     let piercingCount = SKLabelNode(fontNamed: "Rockwell Bold")
+    
     
     override init(size: CGSize) {
         
