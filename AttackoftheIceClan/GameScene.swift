@@ -16,6 +16,7 @@ struct PhysicsCategory {
     static let all        : UInt32 = UInt32.max
     static let iceBullet  : UInt32 = 0b1
     static let projectile : UInt32 = 0b10
+    static let radius     : UInt32 = 0b101
     
 }
 
@@ -35,14 +36,27 @@ extension GameScene: SKPhysicsContactDelegate {
             secondBody = contact.bodyA
         }
         
-        if ((firstBody.categoryBitMask & PhysicsCategory.iceBullet != 0) &&
-            (secondBody.categoryBitMask & PhysicsCategory.projectile != 0)) {
-            if let iceBullet = firstBody.node as? SKSpriteNode,
-                let projectile = secondBody.node as? SKSpriteNode {
-                projectileDidCollideWithIceBullet(projectile: projectile, iceBullet: iceBullet)
+        // Contact between iceBullet and projectile
+        if (firstBody.node?.name == "iceBullet") && ((secondBody.node?.name!.contains("projectile"))!) {
+            if ((firstBody.categoryBitMask & PhysicsCategory.iceBullet != 0) &&
+                (secondBody.categoryBitMask & PhysicsCategory.projectile != 0)) {
+                if let iceBullet = firstBody.node as? SKSpriteNode,
+                    let projectile = secondBody.node as? SKSpriteNode {
+                    projectileDidCollideWithIceBullet(projectile: projectile, iceBullet: iceBullet)
+                }
             }
         }
         
+        // Contact between radius and iceBullet
+        if (firstBody.node?.name == "iceBullet") && ((secondBody.node?.name!.contains("radius"))!) {
+            if ((firstBody.categoryBitMask & PhysicsCategory.iceBullet != 0) &&
+                (secondBody.categoryBitMask & PhysicsCategory.radius != 0)) {
+                if let iceBullet = firstBody.node as? SKSpriteNode,
+                    let radius = secondBody.node as? SKSpriteNode {
+                    radiusDidCollideWithIceBullet(radius: radius, iceBullet: iceBullet)
+                }
+            }
+        }
     }
     
 }
@@ -169,6 +183,7 @@ class GameScene: SKScene {
         iceBullet.physicsBody?.categoryBitMask = PhysicsCategory.iceBullet
         iceBullet.physicsBody?.contactTestBitMask = PhysicsCategory.projectile
         iceBullet.physicsBody?.collisionBitMask = PhysicsCategory.none
+        iceBullet.name = "iceBullet"
         
         // Determine where to spawn the iceBullet along the Y axis
         let actualY = random(min: iceBullet.size.height/2, max: size.height - iceBullet.size.height/2)
@@ -345,7 +360,7 @@ class GameScene: SKScene {
     
     func projectileDidCollideWithIceBullet(projectile: SKSpriteNode, iceBullet: SKSpriteNode) {
         
-        if(bulletDict[projectile.name]! > 0) {
+        if(bulletDict[projectile.name] ?? 0 > 0) {
             bulletDict[projectile.name]! -= 1
         } else {
             projectile.removeFromParent()
@@ -353,12 +368,47 @@ class GameScene: SKScene {
         }
         iceBullet.removeFromParent()
         
+        // Load radius into scene
+        let radius = SKSpriteNode(imageNamed: "fireArea")
+        radius.zPosition = 2
+        radius.position = projectile.position
+        radius.physicsBody = SKPhysicsBody(circleOfRadius: radius.size.width/2)
+        radius.physicsBody?.isDynamic = true
+        radius.physicsBody?.categoryBitMask = PhysicsCategory.radius
+        radius.physicsBody?.contactTestBitMask = PhysicsCategory.iceBullet
+        radius.physicsBody?.collisionBitMask = PhysicsCategory.none
+        radius.physicsBody?.usesPreciseCollisionDetection = true
+        radius.name = "radius\(random())"
+        addChild(radius)
+        
         upgrade.incrementCoinCount()
         score = score + 1
         coins.text = "Coins: \(upgrade.coinCount())"
         scoreLabel.text = "Score: \(score)"
         
         // If amount of iceBullets is equal to n then spawn a bunch at once
+        if score == n {
+            for _ in 1...5 {
+                addIceBullet()
+            }
+            n += 30
+        }
+        
+    }
+    
+    func radiusDidCollideWithIceBullet(radius: SKSpriteNode, iceBullet: SKSpriteNode) {
+        
+        // Remove nodes from scene
+        radius.removeFromParent()
+        iceBullet.removeFromParent()
+        
+        // Increases score and coin count
+        upgrade.incrementCoinCount()
+        score = score + 1
+        coins.text = "Coins: \(upgrade.coinCount())"
+        scoreLabel.text = "Score: \(score)"
+        
+        // Can still trigger mass spawn
         if score == n {
             for _ in 1...5 {
                 addIceBullet()
