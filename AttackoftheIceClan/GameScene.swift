@@ -37,7 +37,7 @@ extension GameScene: SKPhysicsContactDelegate {
         }
         
         // Contact between iceBullet and projectile
-        if (firstBody.node?.name == "iceBullet") && ((secondBody.node?.name!.contains("projectile"))!) {
+        if (firstBody.node?.name == "iceBullet") && ((secondBody.node?.name?.contains("projectile")) ?? false) {
             if ((firstBody.categoryBitMask & PhysicsCategory.iceBullet != 0) &&
                 (secondBody.categoryBitMask & PhysicsCategory.projectile != 0)) {
                 if let iceBullet = firstBody.node as? SKSpriteNode,
@@ -48,7 +48,7 @@ extension GameScene: SKPhysicsContactDelegate {
         }
         
         // Contact between radius and iceBullet
-        if (firstBody.node?.name == "iceBullet") && ((secondBody.node?.name!.contains("radius"))!) {
+        if (firstBody.node?.name == "iceBullet") && ((secondBody.node?.name!.contains("radius")) ?? false) {
             if ((firstBody.categoryBitMask & PhysicsCategory.iceBullet != 0) &&
                 (secondBody.categoryBitMask & PhysicsCategory.radius != 0)) {
                 if let iceBullet = firstBody.node as? SKSpriteNode,
@@ -116,7 +116,8 @@ class GameScene: SKScene {
     var bulletDict: Dictionary<String?, Int> = [:]
     
     // Used to spawn more enemies
-    var n = 30
+    var scoreTracker = 10
+    var extraEnemy = 5
     
     override func didMove(to view: SKView) {
         
@@ -387,11 +388,13 @@ class GameScene: SKScene {
         scoreLabel.text = "Score: \(score)"
         
         // If amount of iceBullets is equal to n then spawn a bunch at once
-        if score == n {
-            for _ in 1...5 {
+        // MAKE THIS INTO A SEPARATE FUNCTION
+        if score == scoreTracker {
+            for _ in 1...extraEnemy {
                 addIceBullet()
             }
-            n += 30
+            scoreTracker += 20
+            extraEnemy += 10
         }
         
     }
@@ -409,11 +412,12 @@ class GameScene: SKScene {
         scoreLabel.text = "Score: \(score)"
         
         // Can still trigger mass spawn
-        if score == n {
-            for _ in 1...5 {
+        if score == scoreTracker {
+            for _ in 1...extraEnemy {
                 addIceBullet()
             }
-            n += 30
+            scoreTracker += 20
+            extraEnemy += 10
         }
         
     }
