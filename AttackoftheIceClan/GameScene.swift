@@ -373,7 +373,10 @@ class GameScene: SKScene {
         let radius = SKSpriteNode(imageNamed: "fireArea")
         radius.zPosition = 2
         radius.position = projectile.position
-        radius.physicsBody = SKPhysicsBody(circleOfRadius: radius.size.width/2)
+        let radiusSize = radius.size.width+CGFloat(upgrade.radiusCount()*2)
+        radius.size.width = radiusSize
+        radius.size.height = radiusSize
+        radius.physicsBody = SKPhysicsBody(circleOfRadius: radiusSize/2)
         radius.physicsBody?.isDynamic = true
         radius.physicsBody?.categoryBitMask = PhysicsCategory.radius
         radius.physicsBody?.contactTestBitMask = PhysicsCategory.iceBullet

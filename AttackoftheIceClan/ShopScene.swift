@@ -9,6 +9,7 @@
 import Foundation
 import SpriteKit
 
+
 class ShopScene: SKScene {
     
     // MARK: Initialize variables
@@ -37,6 +38,9 @@ class ShopScene: SKScene {
         super.init(size: size)
         
         // MARK: Adding to scene
+        
+        
+        upgradeManger.incrementCoinCount()
         
         // Add background image
         background.zPosition = -1
@@ -70,14 +74,14 @@ class ShopScene: SKScene {
         numBulletLabel.text = "Purchase additional bullets? \(upgradeManger.bulletCostCount()) Coins"
         numBulletLabel.zPosition = 1
         numBulletLabel.fontSize = 25
-        numBulletLabel.position = CGPoint(x: (size.width/3), y: ((size.height/3)*2)-40)
+        numBulletLabel.position = CGPoint(x: (size.width/3)-10, y: ((size.height/3)*2)-40)
         addChild(numBulletLabel)
         
         // Add text to let the user know how many upgrades they've bought
         bulletCount.text = "Number of bullets: \(upgradeManger.bulletCount())"
         bulletCount.zPosition = 1
         bulletCount.fontSize = 20
-        bulletCount.position = CGPoint(x: (size.width/3)-140, y: ((size.height/3)*2)-70)
+        bulletCount.position = CGPoint(x: (size.width/3)-149, y: ((size.height/3)*2)-70)
         addChild(bulletCount)
         
         // Button to purchase more bullets
@@ -92,14 +96,14 @@ class ShopScene: SKScene {
         piercingLabel.text = "Purchase the piering upgrade? \(upgradeManger.piercingCostCount()) Coins"
         piercingLabel.zPosition = 1
         piercingLabel.fontSize = 25
-        piercingLabel.position = CGPoint(x: (size.width/3)+15, y: (size.height/2)-40)
+        piercingLabel.position = CGPoint(x: (size.width/3)+05, y: (size.height/2)-40)
         addChild(piercingLabel)
         
         // Add text to let the user know how many upgrades they've bought
-        piercingCount.text = "Number of piercing: \(upgradeManger.piercingCount())"
+        piercingCount.text = "Number of piercing upgrades: \(upgradeManger.piercingCount())"
         piercingCount.zPosition = 1
         piercingCount.fontSize = 20
-        piercingCount.position = CGPoint(x: (size.width/3)-131, y: (size.height/2)-70)
+        piercingCount.position = CGPoint(x: (size.width/3)-90, y: (size.height/2)-70)
         addChild(piercingCount)
         
         // Button to purchase more piercing
@@ -111,17 +115,24 @@ class ShopScene: SKScene {
         
         
         // Add text for the number of radius upgrade
-        radiusLabel.text = "Purchase the radius upgrade? \(upgradeManger.radiusCostCount()) Coins"
-        radiusLabel.zPosition = 1
-        radiusLabel.fontSize = 25
-        radiusLabel.position = CGPoint(x: (size.width/3)+10, y: (size.height/3)-40)
+        if upgradeManger.radiusCount() == 0 {
+            radiusLabel.text = "Purchase the radius upgrade? \(upgradeManger.radiusCostCount()) Coins"
+            radiusLabel.zPosition = 1
+            radiusLabel.fontSize = 25
+            radiusLabel.position = CGPoint(x: (size.width/3), y: (size.height/3)-40)
+        } else {
+            radiusLabel.text = "Increase radius? \(upgradeManger.radiusCostCount()) Coins"
+            radiusLabel.zPosition = 1
+            radiusLabel.fontSize = 25
+            radiusLabel.position.x = (size.width/3)-71
+        }
         addChild(radiusLabel)
         
         // Add text to let the user know how many upgrades they've bought
-        radiusCount.text = "Number of radius: \(upgradeManger.radiusCount())"
+        radiusCount.text = "Number of radius upgrades: \(upgradeManger.radiusCount())"
         radiusCount.zPosition = 1
         radiusCount.fontSize = 20
-        radiusCount.position = CGPoint(x: (size.width/3)-140, y: (size.height/3)-70)
+        radiusCount.position = CGPoint(x: (size.width/3)-100, y: (size.height/3)-70)
         addChild(radiusCount)
         
         // Button to purchase more radius
@@ -148,12 +159,14 @@ class ShopScene: SKScene {
         // Check if touch event is in the buy button for bullets
         if numBulletButton.contains(touchLocation!) {
             if upgradeManger.coinCount() >= upgradeManger.bulletCostCount() {
+                
                 // Update all the labels if user has enough coins and upgrade the bullet count
                 upgradeManger.incrementBulletCount()
                 upgradeManger.decrementCoinCount(price: upgradeManger.bulletCostCount())
                 upgradeManger.incrementBulletCostCount()
                 numBulletLabel.text = "Purchase additional bullets? \(upgradeManger.bulletCostCount()) Coins"
-                bulletCount.text = "Number of piercing: \(upgradeManger.bulletCount())"
+                numBulletLabel.position.x = (size.width/3)
+                bulletCount.text = "Number of bullets: \(upgradeManger.bulletCount())"
                 coinCount.text = "Coins: \(upgradeManger.coinCount())"
             }
         }
@@ -165,8 +178,8 @@ class ShopScene: SKScene {
                 upgradeManger.incrementPiercingCount()
                 upgradeManger.decrementCoinCount(price: upgradeManger.piercingCostCount())
                 upgradeManger.incrementPiercingCostCount()
-                piercingLabel.text = "Purchase additional bullets? \(upgradeManger.piercingCostCount()) Coins"
-                piercingCount.text = "Number of piercing: \(upgradeManger.piercingCount())"
+                piercingLabel.text = "Purchase the piercing upgrade? \(upgradeManger.piercingCostCount()) Coins"
+                piercingCount.text = "Number of piercing upgrade: \(upgradeManger.piercingCount())"
                 coinCount.text = "Coins: \(upgradeManger.coinCount())"
             }
         }
@@ -178,8 +191,9 @@ class ShopScene: SKScene {
                 upgradeManger.incrementRadiusCount()
                 upgradeManger.decrementCoinCount(price: upgradeManger.radiusCostCount())
                 upgradeManger.incrementRadiusCostCount()
-                radiusLabel.text = "Purchase additional bullets? \(upgradeManger.radiusCostCount()) Coins"
-                radiusCount.text = "Number of piercing: \(upgradeManger.radiusCount())"
+                radiusLabel.text = "Increase radius? \(upgradeManger.radiusCostCount()) Coins"
+                radiusLabel.position.x = (size.width/3)-71
+                radiusCount.text = "Number of radius upgrade: \(upgradeManger.radiusCount())"
                 coinCount.text = "Coins: \(upgradeManger.coinCount())"
             }
         }

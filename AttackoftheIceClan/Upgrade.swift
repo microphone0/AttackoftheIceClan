@@ -165,7 +165,7 @@ class Upgrade {
     // Increment the player's amount of coins
     func incrementCoinCount() {
         
-        coins = coinCount() + 1
+        coins = coinCount() + 100000000
         saveData()
         
     }
@@ -202,7 +202,8 @@ class Upgrade {
         
     }
     
-    // Increment the player's radius ability
+    // First purchase is activating the radius ability
+    // Then increment the player's radius' size ability
     func incrementRadiusCount() {
         
         radius = radiusCount() + 1
