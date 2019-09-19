@@ -124,7 +124,7 @@ class ShopScene: SKScene {
             radiusLabel.text = "Increase radius? \(upgradeManger.radiusCostCount()) Coins"
             radiusLabel.zPosition = 1
             radiusLabel.fontSize = 25
-            radiusLabel.position.x = (size.width/3)-71
+            radiusLabel.position = CGPoint(x: (size.width/3)-71, y: (size.height/3)-40)
         }
         addChild(radiusLabel)
         
